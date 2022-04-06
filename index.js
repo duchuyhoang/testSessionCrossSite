@@ -12,10 +12,10 @@ app.use(
     secret: "somesecret",
     cookie: {
       maxAge: 60000,
-	  secure:true,
-    //   domain: "http://127.0.0.1:5500",
+      secure: true,
+      //   domain: "http://127.0.0.1:5500",
       sameSite: "none",
-	  path:"/"
+      path: "/",
     },
   })
 );
@@ -24,13 +24,13 @@ app.use(
     origin: "http://127.0.0.1:5500",
     credentials: true,
   })
-  );
-  
-  app.get("/session", (req, res) => {
-	req.session.user = {
-	  name: "dddd",
-  age: 10,
-};
+);
+
+app.get("/session", (req, res) => {
+  req.session.user = {
+    name: "dddd",
+    age: 10,
+  };
   // res.sendFile(path.resolve(__dirname,"index.html"));
   res.json({ ok: "dada" });
 });
@@ -120,6 +120,6 @@ app.post("/upload", upload.single("file"), (req, res) => {
   res.json({ message: "ok" });
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("server listne");
 });
