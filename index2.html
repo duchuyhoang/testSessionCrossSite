@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	hello world 132321
+	<input type="file" accept="audio/*" onchange="handleChangeInput(event)" />
+</body>
+<script>
+	const toBase64 = file => new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = () => resolve(reader.result);
+		reader.onerror = error => reject(error);
+	});
+
+	async function handleChangeInput(e) {
+		console.log(e.target.files)
+		try {
+			const result = await toBase64(e.target.files[0]);
+			console.log(result);
+			const formData = new FormData();
+			formData.append("text", "13131");
+			formData.append("file", result);
+			formData.append("age", 56);
+			const res = fetch("http://localhost:3000/upload", {
+				method: "POST",
+				body: formData
+			});
+			console.log(res);
+		} catch (e) {
+			console.log(e);
+		}
+	}
+</script>
+
+</html>
